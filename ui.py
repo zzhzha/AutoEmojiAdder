@@ -3,35 +3,6 @@ from tkinter.ttk import *
 from tkinter import Scale
 
 
-# class TableFrame(Frame):
-#     def __init__(self, master, **kwargs):
-#         super().__init__(master, **kwargs)
-#         self.tree = self.create_table()
-#         self.xscroll, self.yscroll = self.create_scrollbars(self.tree)
-#
-#     def create_table(self):
-#         tree = Treeview(self, columns="path")
-#         tree.column("#0", anchor=CENTER)
-#         tree.column("path", anchor=CENTER)
-#         tree.heading('#0', text='name')
-#         tree.heading('path', text='path')
-#         return tree
-#
-#     def create_scrollbars(self, tree):
-#         xscroll = Scrollbar(self, orient=HORIZONTAL)
-#         yscroll = Scrollbar(self, orient=VERTICAL)
-#         tree.config(xscrollcommand=xscroll.set, yscrollcommand=yscroll.set)
-#         xscroll.config(command=tree.xview)
-#         yscroll.config(command=tree.yview)
-#         return xscroll, yscroll
-#
-#     def pack_(self, cnf={}, **kw):
-#         self.pack(cnf, **kw)
-#         self.xscroll.pack(side=BOTTOM, fill=X)
-#         self.yscroll.pack(side=RIGHT, fill=Y)
-#         self.tree.pack(fill=BOTH, expand=1)
-
-
 class TableFrame(Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -59,6 +30,10 @@ class TableFrame(Frame):
         self.xscroll.pack(side=BOTTOM, fill=X)
         self.yscroll.pack(side=RIGHT, fill=Y)
         self.tree.pack(fill=BOTH, expand=1)
+
+
+
+
 class ImageConfigLabelFrame(Labelframe):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -78,6 +53,7 @@ class ImageConfigLabelFrame(Labelframe):
         self.pack(cnf, **kw)
         self.max_image_length_config_scale.pack(side=TOP, fill=X, padx=6, pady=3)
         self.inquire_enlarge_pic_config_checkbutton.pack(side=TOP, expand=1, padx=6, pady=3)
+
 
 class MainFrame(Frame):
     def __init__(self, master, **kwargs):
@@ -100,13 +76,13 @@ class MainFrame(Frame):
         return frame
 
     def create_image_config_frame(self):
-        image_config_frame = ImageConfigLabelFrame(self,text="图片配置")
+        image_config_frame = ImageConfigLabelFrame(self, text="图片配置")
         return image_config_frame
 
     def pack_(self, cnf={}, **kw):
         self.pack(cnf, **kw)
-        self.start_button.pack(side=TOP, fill='none', padx=8, pady=8,ipadx=5, ipady=3)
-        self.select_emoji_folder_button.pack(side=TOP, fill='none', expand=1, padx=8, pady=3,ipadx=5, ipady=3)
+        self.start_button.pack(side=TOP, fill='none', padx=8, pady=8, ipadx=5, ipady=3)
+        self.select_emoji_folder_button.pack(side=TOP, fill='none', expand=1, padx=8, pady=3, ipadx=5, ipady=3)
         self.empty_frame.pack(side=TOP, fill=BOTH, expand=1, padx=8, pady=3)
         self.image_config_frame.pack_(side=BOTTOM, fill=BOTH, expand=1, padx=8, pady=6)
 
@@ -120,8 +96,8 @@ class WinGUI(Tk):
 
     def __win(self):
         self.title("Tkinter")
-        # self.geometry("800x600")
-        # self.resizable(width=False, height=False)
+        self.geometry("800x600")
+        self.resizable(width=False, height=False)
 
     def __table_frame(self):
         table_frame = TableFrame(self)
@@ -145,6 +121,7 @@ class Win(WinGUI):
 
     def __event_bind(self):
         pass
+
     #     self.tk_table_table.bind('<Double-Button-1>', self.ctl.show_image)
     #     self.tk_table_table.bind('<Delete>', self.ctl.multi_delete_image)
     #

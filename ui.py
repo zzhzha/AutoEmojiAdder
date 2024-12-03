@@ -3,6 +3,35 @@ from tkinter.ttk import *
 from tkinter import Scale
 
 
+# class TableFrame(Frame):
+#     def __init__(self, master, **kwargs):
+#         super().__init__(master, **kwargs)
+#         self.tree = self.create_table()
+#         self.xscroll, self.yscroll = self.create_scrollbars(self.tree)
+#
+#     def create_table(self):
+#         tree = Treeview(self, columns="path")
+#         tree.column("#0", anchor=CENTER)
+#         tree.column("path", anchor=CENTER)
+#         tree.heading('#0', text='name')
+#         tree.heading('path', text='path')
+#         return tree
+#
+#     def create_scrollbars(self, tree):
+#         xscroll = Scrollbar(self, orient=HORIZONTAL)
+#         yscroll = Scrollbar(self, orient=VERTICAL)
+#         tree.config(xscrollcommand=xscroll.set, yscrollcommand=yscroll.set)
+#         xscroll.config(command=tree.xview)
+#         yscroll.config(command=tree.yview)
+#         return xscroll, yscroll
+#
+#     def pack_(self, cnf={}, **kw):
+#         self.pack(cnf, **kw)
+#         self.xscroll.pack(side=BOTTOM, fill=X)
+#         self.yscroll.pack(side=RIGHT, fill=Y)
+#         self.tree.pack(fill=BOTH, expand=1)
+
+
 class TableFrame(Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
@@ -20,6 +49,7 @@ class TableFrame(Frame):
     def create_scrollbars(self, tree):
         xscroll = Scrollbar(self, orient=HORIZONTAL)
         yscroll = Scrollbar(self, orient=VERTICAL)
+        tree.config(xscrollcommand=xscroll.set, yscrollcommand=yscroll.set)
         xscroll.config(command=tree.xview)
         yscroll.config(command=tree.yview)
         return xscroll, yscroll
@@ -29,8 +59,6 @@ class TableFrame(Frame):
         self.xscroll.pack(side=BOTTOM, fill=X)
         self.yscroll.pack(side=RIGHT, fill=Y)
         self.tree.pack(fill=BOTH, expand=1)
-
-
 class ImageConfigLabelFrame(Labelframe):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)

@@ -25,8 +25,8 @@ class TableFrame(Frame):
         yscroll.config(command=tree.yview)
         return xscroll, yscroll
 
-    def pack_(self, cnf={}, **kw):
-        self.pack(cnf, **kw)
+    def pack(self, cnf={}, **kw):
+        super().pack(cnf, **kw)
         self.xscroll.pack(side=BOTTOM, fill=X)
         self.yscroll.pack(side=RIGHT, fill=Y)
         self.tree.pack(fill=BOTH, expand=1)
@@ -54,13 +54,17 @@ class ImageConfigLabelFrame(Labelframe):
         self.max_image_length_config_scale.pack(side=TOP, fill=X, padx=6, pady=3)
         self.inquire_enlarge_pic_config_checkbutton.pack(side=TOP, expand=1, padx=6, pady=3)
 
+    def grid_(self, cnf={}, **kw):
+        self.grid(cnf, **kw)
+        self.max_image_length_config_scale.pack(side=TOP, fill=X, padx=6, pady=3)
+        self.inquire_enlarge_pic_config_checkbutton.pack(side=TOP, expand=1, padx=6, pady=3)
 
-class MainFrame(Frame):
+
+class MainFunctionFrame(Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         self.start_button = self.create_start_button()
         self.select_emoji_folder_button = self.create_select_emoji_folder_button()
-        self.empty_frame = self.create_empty_frame()
         self.image_config_frame = self.create_image_config_frame()
 
     def create_start_button(self):
@@ -71,20 +75,19 @@ class MainFrame(Frame):
         button = Button(self, text="选择表情包文件夹")
         return button
 
-    def create_empty_frame(self):
-        frame = Frame(self)
-        return frame
-
     def create_image_config_frame(self):
         image_config_frame = ImageConfigLabelFrame(self, text="图片配置")
         return image_config_frame
 
-    def pack_(self, cnf={}, **kw):
-        self.pack(cnf, **kw)
-        self.start_button.pack(side=TOP, fill='none', padx=8, pady=8, ipadx=5, ipady=3)
-        self.select_emoji_folder_button.pack(side=TOP, fill='none', expand=1, padx=8, pady=3, ipadx=5, ipady=3)
-        self.empty_frame.pack(side=TOP, fill=BOTH, expand=1, padx=8, pady=3)
-        self.image_config_frame.pack_(side=BOTTOM, fill=BOTH, expand=1, padx=8, pady=6)
+    def pack(self, cnf={}, **kw):
+        super().pack(cnf, **kw)
+        self.start_button.grid(row=0, column=0, padx=8, pady=8, ipadx=5, ipady=3,sticky="nsew")
+        self.select_emoji_folder_button.grid(row=0, column=1, padx=8, pady=3, ipadx=5, ipady=3,sticky="nsew")
+        self.image_config_frame.grid_(row=1, column=0, padx=8, pady=3,columnspan=2,sticky="nsew")
+        # self.start_button.pack(side=TOP, fill='none', padx=8, pady=8, ipadx=5, ipady=3)
+        # self.select_emoji_folder_button.pack(side=TOP, fill='none', expand=1, padx=8, pady=3, ipadx=5, ipady=3)
+        # self.empty_frame.pack(side=TOP, fill=BOTH, expand=1, padx=8, pady=3)
+        # self.image_config_frame.pack_(side=BOTTOM, fill=BOTH, expand=1, padx=8, pady=6)
 
 
 class WinGUI(Tk):
@@ -97,17 +100,17 @@ class WinGUI(Tk):
     def __win(self):
         self.title("Tkinter")
         self.geometry("800x600")
-        self.resizable(width=False, height=False)
+        # self.resizable(width=False, height=False)
 
     def __table_frame(self):
         table_frame = TableFrame(self)
-        table_frame.pack_(side=LEFT, fill=BOTH, expand=1)
+        table_frame.pack(side=LEFT, fill=BOTH, expand=1)
         return table_frame
 
     def __main_frame(self):
-        main_frame = MainFrame(self)
-        main_frame.pack_(side=LEFT, fill=BOTH, expand=1)
-        return main_frame
+        main_function_frame = MainFunctionFrame(self,relief=RIDGE, borderwidth=12)
+        main_function_frame.pack(side=LEFT, fill=BOTH, expand=1)
+        return main_function_frame
 
 
 class Win(WinGUI):

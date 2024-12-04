@@ -217,18 +217,20 @@ class Win(WinGUI):
         super().__init__()
         self.__event_bind()
         self.__style_config()
-        # self.ctl.init(self)
-        # self.tk_check_button_enlarge_pic_checkbutton.config(variable=self.ctl.ENLARGE_STATE)
+        self.ctl.init(self)
+        self.except_table_frame.main_function_frame.image_config_frame.inquire_enlarge_pic_config_checkbutton.config(variable=self.ctl.ENLARGE_STATE)
 
     def __event_bind(self):
         pass
 
-    #     self.tk_table_table.bind('<Double-Button-1>', self.ctl.show_image)
-    #     self.tk_table_table.bind('<Delete>', self.ctl.multi_delete_image)
-    #
-    #     self.tk_button_start_button.bind('<Button-1>', self.ctl.start_add_image)
-    #     self.tk_button_select_image_folder_button.bind('<Button-1>', self.ctl.select_image_folder)
-    #     self.tk_scale_max_length_scale.bind('<B1-Motion>', self.ctl.set_max_length)
+        self.table_frame.tree.bind('<Double-Button-1>', self.ctl.show_image)
+        self.table_frame.tree.bind('<Delete>', self.ctl.multi_delete_image)
+        self.except_table_frame.main_function_frame.buttons_frame.start_button.bind('<Button-1>', self.ctl.start_add_image)
+        self.except_table_frame.main_function_frame.buttons_frame.select_emoji_folder_button.bind('<Button-1>', self.ctl.select_image_folder)
+        self.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.bind('<B1-Motion>', self.ctl.set_max_length)
+        # self.except_table_frame.main_function_frame.buttons_frame.start_button.config(command=self.ctl.start_add_image)
+        # self.except_table_frame.main_function_frame.buttons_frame.select_emoji_folder_button.config(command=self.ctl.select_emoji_folder)
+        # self.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.config(command=self.ctl.set_max_length)
 
     def __style_config(self):
         pass

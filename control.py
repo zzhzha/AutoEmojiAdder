@@ -31,12 +31,12 @@ class Controller:
 
         self.MAX_LENGTH = IntVar()
         self.MAX_LENGTH.set(1024)
-        self.ui.tk_scale_max_length_scale.set(1024)
+        self.ui.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.set(1024)
 
         self.ENLARGE_STATE = BooleanVar()
         self.ENLARGE_STATE.set(True)
 
-        self.ui.tk_check_button_enlarge_pic_checkbutton.config(variable=self.ENLARGE_STATE)
+        self.ui.except_table_frame.main_function_frame.image_config_frame.inquire_enlarge_pic_config_checkbutton.config(variable=self.ENLARGE_STATE)
 
         self.pics_types_list = ['.bmp', '.jpg', '.jpeg', '.png', '.gif', '.webp']
 
@@ -48,23 +48,23 @@ class Controller:
         多选删除
         """
         # 反向遍历删除,因为从前往后删除的时候会改变选中项的实际的ID，与之前的ID不一致，导致删除失败出错
-        selected_items = reversed(self.ui.tk_table_table.selection())  # 获取所有选中的项的ID
+        selected_items = reversed(self.ui.table_frame.tree.selection())  # 获取所有选中的项的ID
         for i in selected_items:
-            self.ui.tk_table_table.delete(i)
+            self.ui.table_frame.tree.delete(i)
 
     def show_image(self, evt):
-        item = self.ui.tk_table_table.focus()
+        item = self.ui.table_frame.tree.focus()
         # 如果没有选中任何（item），则返回
         if not item:
             return
         # 如果选中的item不是图片（是文件夹），则返回
-        if self.ui.tk_table_table.set(item, 'name'):
+        if self.ui.table_frame.tree.set(item, 'name'):
             return
-        pic_folder_node = self.ui.tk_table_table.parent(item)
-        pic_folder_name = self.ui.tk_table_table.set(pic_folder_node, 'name')
-        pic_folder_path = os.path.join(self.ui.tk_table_table.set(pic_folder_node, 'path'), pic_folder_name)
+        pic_folder_node = self.ui.table_frame.tree.parent(item)
+        pic_folder_name = self.ui.table_frame.tree.set(pic_folder_node, 'name')
+        pic_folder_path = os.path.join(self.ui.table_frame.tree.set(pic_folder_node, 'path'), pic_folder_name)
 
-        pic_name = self.ui.tk_table_table.set(item, 'path')
+        pic_name = self.ui.table_frame.tree.set(item, 'path')
         pic_path = os.path.join(pic_folder_path, pic_name).replace('\\', '/')
         pic = Image.open(pic_path)
         pic.show()
@@ -75,12 +75,12 @@ class Controller:
         获取所有图片的路径列表
         """
         pics_path_list = []
-        for root_item in self.ui.tk_table_table.get_children():
-            pic_folder_name = self.ui.tk_table_table.set(root_item, 'name')
-            pic_folder_path = os.path.join(self.ui.tk_table_table.set(root_item, 'path'), pic_folder_name)
+        for root_item in self.ui.table_frame.tree.get_children():
+            pic_folder_name = self.ui.table_frame.tree.set(root_item, 'name')
+            pic_folder_path = os.path.join(self.ui.table_frame.tree.set(root_item, 'path'), pic_folder_name)
 
-            for item in self.ui.tk_table_table.get_children(root_item):
-                pic_name = self.ui.tk_table_table.set(item, 'path')
+            for item in self.ui.table_frame.tree.get_children(root_item):
+                pic_name = self.ui.table_frame.tree.set(item, 'path')
                 pic_path = os.path.join(pic_folder_path, pic_name).replace('\\', '/')
                 pics_path_list.append(pic_path)
         return pics_path_list
@@ -182,14 +182,14 @@ class Controller:
 
     def start_add_image(self, evt):
 
-        self.ui.tk_button_start_button.config(state=DISABLED)
-        self.ui.tk_button_select_image_folder_button.config(state=DISABLED)
-        self.ui.tk_scale_max_length_scale.config(state=DISABLED)
-        self.ui.tk_check_button_enlarge_pic_checkbutton.config(state=DISABLED)
-        self.ui.tk_table_table.config(selectmode="none")
+        self.ui.except_table_frame.main_function_frame.buttons_frame.start_button.config(state=DISABLED)
+        self.ui.except_table_frame.main_function_frame.buttons_frame.select_image_folder_button.config(state=DISABLED)
+        self.ui.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.config(state=DISABLED)
+        self.ui.except_table_frame.main_function_frame.image_config_frame.inquire_enlarge_pic_config_checkbutton.config(state=DISABLED)
+        self.ui.table_frame.tree.config(selectmode="none")
 
         self.pics_path_list = self.get_pics_path_list()
-        self.ui.tk_table_table.delete(*self.ui.tk_table_table.get_children())
+        self.ui.table_frame.tree.delete(*self.ui.table_frame.tree.get_children())
         for pic_path in self.pics_path_list:
             self.convert_image(pic_path)
         pics_convert_list = [os.path.join(self.CONVERT_OUTPUT_FOLDER_PATH.get(), item) for item in
@@ -239,11 +239,11 @@ class Controller:
             MenuItemControl.Click(simulateMove=True)
             time.sleep(1)
 
-        self.ui.tk_button_start_button.config(state=NORMAL)
-        self.ui.tk_button_select_image_folder_button.config(state=NORMAL)
-        self.ui.tk_scale_max_length_scale.config(state=NORMAL)
-        self.ui.tk_check_button_enlarge_pic_checkbutton.config(state=NORMAL)
-        self.ui.tk_table_table.config(selectmode='extended')
+        self.ui.except_table_frame.main_function_frame.buttons_frame.start_button.config(state=NORMAL)
+        self.ui.except_table_frame.main_function_frame.buttons_frame.select_image_folder_button.config(state=NORMAL)
+        self.ui.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.config(state=NORMAL)
+        self.ui.except_table_frame.main_function_frame.image_config_frame.inquire_enlarge_pic_config_checkbutton.config(state=NORMAL)
+        self.ui.table_frame.tree.config(selectmode='extended')
         # 删除output文件夹下的所有文件
         for item in os.listdir(self.CONVERT_OUTPUT_FOLDER_PATH.get()):
             os.remove(os.path.join(self.CONVERT_OUTPUT_FOLDER_PATH.get(), item))
@@ -256,18 +256,18 @@ class Controller:
         dir_name = os.path.basename(dir_)
 
         # 如果选择的文件夹已经存在列表中，则不再添加
-        if dir_name in [self.ui.tk_table_table.set(item, 'name') for item in self.ui.tk_table_table.get_children()]:
+        if dir_name in [self.ui.table_frame.tree.set(item, 'name') for item in self.ui.table_frame.tree.get_children()]:
             return
         dir_path = os.path.dirname(dir_)
-        father = self.ui.tk_table_table.insert('', END, open=False, text='', values=(dir_name, dir_path,))
+        father = self.ui.table_frame.tree.insert('', END, open=False, text='', values=(dir_name, dir_path,))
         pics_name_list = [item for item in os.listdir(dir_) if
                           os.path.splitext(item)[1].lower() in self.pics_types_list]
         # 如果文件夹下没有图片，则返回
         if not pics_name_list:
             return
         for pic_name in pics_name_list:
-            self.ui.tk_table_table.insert(father, END, open=True, text='', values=('', pic_name))
+            self.ui.table_frame.tree.insert(father, END, open=True, text='', values=('', pic_name))
 
     def set_max_length(self, evt):
-        self.MAX_LENGTH.set(self.ui.tk_scale_max_length_scale.get())
+        self.MAX_LENGTH.set(self.ui.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.get())
         print("设置最大长度为:", self.MAX_LENGTH.get())

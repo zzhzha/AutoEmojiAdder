@@ -81,7 +81,7 @@ class ImageConfigLabelFrame(Labelframe):
         self.inquire_enlarge_pic_config_checkbutton = self.create_inquire_enlarge_pic_config_checkbutton()
 
     def create_max_image_length_config_scale(self):
-        scale = Scale(self, from_=1, to=1024, orient=HORIZONTAL, label="图片边长（1~1024）")
+        scale = Scale(self, from_=1, to=1024, orient=HORIZONTAL, label="图片边长（1~1024）",width=20)
         return scale
 
     def create_inquire_enlarge_pic_config_checkbutton(self):
@@ -197,7 +197,7 @@ class WinGUI(Tk):
     def __win(self):
         self.title("Tkinter")
         self.geometry("700x600")
-        self.minsize(700, 600)
+        self.minsize(850, 600)
         # self.resizable(width=False, height=False)
 
     def __table_frame(self):

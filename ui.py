@@ -42,7 +42,7 @@ class TableFrame(Frame):
 class IntroductionFrame(Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
-        self.profile_photo_label = self.create_profile_photo_label()
+        # self.profile_photo_label = self.create_profile_photo_label()
         self.about_text = self.create_about_text()
 
     def create_profile_photo_label(self):
@@ -57,12 +57,12 @@ class IntroductionFrame(Frame):
         你可以选择表情包文件夹，然后将图片按照指定尺寸进行缩放，并将图片名和路径写入表格。
         最后，你可以将表格中的图片拖拽到指定位置，并将其转换为 emoji 表情。
         """
-        text_ = Text(self, wrap=WORD, width=30)
+        text_ = Text(self, wrap=WORD, width=36)
         text_.insert(END, text)
         return text_
 
     def pack_children(self):
-        self.profile_photo_label.pack(side=TOP, fill=BOTH, padx=8, pady=3)
+        # self.profile_photo_label.pack(side=TOP, fill=BOTH, padx=8, pady=3)
         self.about_text.pack(side=TOP, fill=BOTH, expand=1, padx=8, pady=3)
 
     def pack(self, cnf={}, **kw):

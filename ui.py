@@ -10,11 +10,17 @@ class TableFrame(Frame):
         self.xscroll, self.yscroll = self.create_scrollbars(self.tree)
 
     def create_table(self):
-        columns = {"name": 79, "path": 319}
-        tk_table = Treeview(self, show="headings", columns=list(columns), )
-        for text, width in columns.items():  # 批量设置列属性
-            tk_table.heading(text, text=text, anchor='center')
-            tk_table.column(text, anchor='center', width=width, stretch=False)  # stretch 不自动拉伸
+        # columns = {"图片文件夹名称": 120, "路径": 319}
+        tk_table = Treeview(self, show="headings", columns=("图片文件夹名称", "路径"))
+
+        tk_table.column("图片文件夹名称", anchor="center", stretch=False)
+        tk_table.heading("图片文件夹名称", text="图片文件夹名称", anchor=CENTER)
+
+        tk_table.column("路径", anchor="center", stretch=True)
+        tk_table.heading("路径", text="路径", anchor='center')
+        # for text, width in columns.items():  # 批量设置列属性
+        #     tk_table.heading(text, text=text, anchor='center')
+        #     tk_table.column(text, anchor='center', width=width, stretch=False)  # stretch 不自动拉伸
 
         # tree = Treeview(self, columns="path")
         # tree.column("#0", anchor=CENTER)
@@ -32,7 +38,7 @@ class TableFrame(Frame):
         return xscroll, yscroll
 
     def pack_children(self):
-        self.xscroll.pack(side=BOTTOM, fill=X)
+        self.xscroll.pack(side=BOTTOM, fill=X, expand=False)
         self.yscroll.pack(side=RIGHT, fill=Y)
         self.tree.pack(fill=BOTH, expand=1)
 
@@ -49,7 +55,7 @@ class IntroductionFrame(Frame):
     def __init__(self, master, **kwargs):
         super().__init__(master, **kwargs)
         # self.profile_photo_label = self.create_profile_photo_label()
-        self.about_text = self.create_about_text()
+        self.about_label = self.create_about_label()
 
     def create_profile_photo_label(self):
         photo = PhotoImage(file="profile.gif")
@@ -57,19 +63,45 @@ class IntroductionFrame(Frame):
         label.image = photo
         return label
 
-    def create_about_text(self):
-        text = """
-        这是一个基于 Python 的表情包制作工具。
-        你可以选择表情包文件夹，然后将图片按照指定尺寸进行缩放，并将图片名和路径写入表格。
-        最后，你可以将表格中的图片拖拽到指定位置，并将其转换为 emoji 表情。
-        """
-        text_ = Text(self, wrap=WORD, width=36)
-        text_.insert(END, text)
-        return text_
+    def create_about_label(self):
+        # text = """
+        # 程序界面使用Python的Tkinter库进行开发。
+        # 程序主要功能是将指定文件夹内的图片添加到你的微信的表情包库中。
+        #
+        # 与很多其他添加微信表情包的程序一样，本程序也有一些限制和问题：
+        # 1.程序运行过程中你不能在电脑中进行其他任何操作，因为程序使用了操控键盘输入和鼠标光标的库。
+        # 2.程序虽然可以自动将大图片转化为小图片，但是图片质量越大转换时间越长，因此尽量不要选择质量过大的图片或者自己先手动缩小再添加到选择的文件夹内。
+        # 3.由于本人技术限制，程序仍然存在一些bug，但bug并不会导致什么问题（因为定位都在微信上）。
+        #
+        # 程序使用说明：
+        # 将文件传输助手窗口独立出来，尽可能拉长，最好放大到全屏。此时再打开程序配置好选项后点击开始，程序就会自动运行。
+        #
+        # 选项配置说明：
+        #
+        # 图片配置区域说明：
+        # 图片边长：设置微信表情包的最大边长（1~1024），图片的最长边超过设定的长度将被自动缩小至等于所设定的长度。
+        #
+        # 是否放大小于所设定最长图片边长的图片：如果选中此选项，程序将会将图片放大到所设定的最长图片边长；如果不选中，则图片保持原大小。
+        #
+        #
+        # 表格：
+        # 选择的所有的图片文件夹的名称和路径都显示在里面，
+        #
+        #
+        #
+        # 你可以选择表情包文件夹，然后将图片按照指定尺寸进行缩放，并将图片名和路径写入表格。
+        # 最后，你可以将表格中的图片拖拽到指定位置，并将其转换为 emoji 表情。
+        # """
+        text = """123"""
+        label = Label(self, text=text, wraplength=234)
+        return label
+        # text_ = Text(self, wrap=WORD, width=36)
+        # text_.insert(END, text)
+        # return text_
 
     def pack_children(self):
         # self.profile_photo_label.pack(side=TOP, fill=BOTH, padx=8, pady=3)
-        self.about_text.pack(side=TOP, fill=BOTH, expand=1, padx=8, pady=3)
+        self.about_label.pack(side=TOP, fill=BOTH, expand=1, padx=8, pady=3)
 
     def pack(self, cnf={}, **kw):
         super().pack(cnf, **kw)
@@ -87,7 +119,7 @@ class ImageConfigLabelFrame(Labelframe):
         self.inquire_enlarge_pic_config_checkbutton = self.create_inquire_enlarge_pic_config_checkbutton()
 
     def create_max_image_length_config_scale(self):
-        scale = Scale(self, from_=1, to=1024, orient=HORIZONTAL, label="图片边长（1~1024）",width=20)
+        scale = Scale(self, from_=1, to=1024, orient=HORIZONTAL, label="图片边长（1~1024）", width=20)
         return scale
 
     def create_inquire_enlarge_pic_config_checkbutton(self):
@@ -199,11 +231,10 @@ class WinGUI(Tk):
         self.table_frame = self.__table_frame()
         self.except_table_frame = self.__except_table_frame()
 
-
     def __win(self):
         self.title("Tkinter")
-        self.geometry("700x600")
-        self.minsize(850, 900)
+        # self.geometry("700x600")
+        # self.minsize(600, 500)
         # self.resizable(width=False, height=False)
 
     def __table_frame(self):
@@ -224,20 +255,23 @@ class Win(WinGUI):
         self.__event_bind()
         self.__style_config()
         self.ctl.init(self)
-        self.except_table_frame.main_function_frame.image_config_frame.inquire_enlarge_pic_config_checkbutton.config(variable=self.ctl.ENLARGE_STATE)
+        self.except_table_frame.main_function_frame.image_config_frame.inquire_enlarge_pic_config_checkbutton.config(
+            variable=self.ctl.ENLARGE_STATE)
 
     def __event_bind(self):
-        pass
+        self.bind("<Configure>", self.ctl.fix_tree_column_width)
 
         self.table_frame.tree.bind('<Double-Button-1>', self.ctl.show_image)
         self.table_frame.tree.bind('<Delete>', self.ctl.multi_delete_image)
+        self.table_frame.tree.bind("<B1-Motion>", self.ctl.fix_tree_column_width)
+        self.table_frame.tree.bind("<ButtonRelease-1>", self.ctl.fix_tree_column_width)
 
-        self.except_table_frame.main_function_frame.buttons_frame.start_button.bind('<Button-1>', self.ctl.start_add_image)
-        self.except_table_frame.main_function_frame.buttons_frame.select_emoji_folder_button.bind('<Button-1>', self.ctl.select_image_folder)
-        self.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.bind('<B1-Motion>', self.ctl.set_max_length)
-        # self.except_table_frame.main_function_frame.buttons_frame.start_button.config(command=self.ctl.start_add_image)
-        # self.except_table_frame.main_function_frame.buttons_frame.select_emoji_folder_button.config(command=self.ctl.select_emoji_folder)
-        # self.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.config(command=self.ctl.set_max_length)
+        self.except_table_frame.main_function_frame.buttons_frame.start_button.bind('<Button-1>',
+                                                                                    self.ctl.start_add_image)
+        self.except_table_frame.main_function_frame.buttons_frame.select_emoji_folder_button.bind('<Button-1>',
+                                                                                                  self.ctl.select_image_folder)
+        self.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.bind('<B1-Motion>',
+                                                                                                          self.ctl.set_max_length)
 
     def __style_config(self):
         pass

@@ -42,7 +42,15 @@ class Controller:
 
         self.pics_path_list = []
 
-
+    def fix_tree_column_width(self,event):
+        tree_width = self.ui.table_frame.tree.winfo_width()
+        column1_width = self.ui.table_frame.tree.column("图片文件夹名称", "width")
+        column2_width = self.ui.table_frame.tree.column("路径", "width")
+        if column1_width + column2_width > tree_width:
+            self.ui.table_frame.tree.column("路径", width=tree_width - column1_width)
+        if column1_width > tree_width:
+            self.ui.table_frame.tree.column("图片文件夹名称", width=150)
+            self.ui.table_frame.tree.column("路径", width=tree_width - 150)
     def multi_delete_image(self, evt):
         """
         多选删除
@@ -58,13 +66,13 @@ class Controller:
         if not item:
             return
         # 如果选中的item不是图片（是文件夹），则返回
-        if self.ui.table_frame.tree.set(item, 'name'):
+        if self.ui.table_frame.tree.set(item, '图片文件夹名称'):
             return
         pic_folder_node = self.ui.table_frame.tree.parent(item)
-        pic_folder_name = self.ui.table_frame.tree.set(pic_folder_node, 'name')
-        pic_folder_path = os.path.join(self.ui.table_frame.tree.set(pic_folder_node, 'path'), pic_folder_name)
+        pic_folder_name = self.ui.table_frame.tree.set(pic_folder_node, '图片文件夹名称')
+        pic_folder_path = os.path.join(self.ui.table_frame.tree.set(pic_folder_node, '路径'), pic_folder_name)
 
-        pic_name = self.ui.table_frame.tree.set(item, 'path')
+        pic_name = self.ui.table_frame.tree.set(item, '路径')
         pic_path = os.path.join(pic_folder_path, pic_name).replace('\\', '/')
         pic = Image.open(pic_path)
         pic.show()
@@ -76,11 +84,11 @@ class Controller:
         """
         pics_path_list = []
         for root_item in self.ui.table_frame.tree.get_children():
-            pic_folder_name = self.ui.table_frame.tree.set(root_item, 'name')
-            pic_folder_path = os.path.join(self.ui.table_frame.tree.set(root_item, 'path'), pic_folder_name)
+            pic_folder_name = self.ui.table_frame.tree.set(root_item, '图片文件夹名称')
+            pic_folder_path = os.path.join(self.ui.table_frame.tree.set(root_item, '路径'), pic_folder_name)
 
             for item in self.ui.table_frame.tree.get_children(root_item):
-                pic_name = self.ui.table_frame.tree.set(item, 'path')
+                pic_name = self.ui.table_frame.tree.set(item, '路径')
                 pic_path = os.path.join(pic_folder_path, pic_name).replace('\\', '/')
                 pics_path_list.append(pic_path)
         return pics_path_list
@@ -255,7 +263,7 @@ class Controller:
         dir_name = os.path.basename(dir_)
 
         # 如果选择的文件夹已经存在列表中，则不再添加
-        if dir_name in [self.ui.table_frame.tree.set(item, 'name') for item in self.ui.table_frame.tree.get_children()]:
+        if dir_name in [self.ui.table_frame.tree.set(item, '图片文件夹名称') for item in self.ui.table_frame.tree.get_children()]:
             return
         dir_path = os.path.dirname(dir_)
         father = self.ui.table_frame.tree.insert('', END, open=False, text='', values=(dir_name, dir_path,))

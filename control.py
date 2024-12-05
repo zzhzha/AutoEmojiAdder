@@ -147,7 +147,6 @@ class Controller:
                 self.resize_gif(pic_path, converted_image_path, scale)
             else:
                 shutil.copy2(pic_path, converted_image_path)
-
             # 跳过gif格式的图片
             # shutil.copy2(pic_path, converted_image_path)
 

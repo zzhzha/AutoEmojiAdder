@@ -82,6 +82,7 @@ b站账号：Z在此
     3.由于本人技术限制，程序存在bug，bug发生时无法继续添加表情包，而程序仍会持续运行。此时要么只能等待程序自行结束，或者乘添加表情包光标停止的时间的间隙自己手动关了程序窗口（。bug并不会导致额外的什么问题（因为定位都在微信上）。
 
 
+
 程序使用说明：
     将文件传输助手窗口独立出来，！！尽可能拉长拉大！！，运行时程序会自动将文件传输助手窗口置顶。此时再打开程序配置好选项后就可以开始了。
 
@@ -279,6 +280,8 @@ class Win(WinGUI):
         self.table_frame.tree.bind('<Delete>', self.ctl.multi_delete_image)
         self.table_frame.tree.bind("<B1-Motion>", self.ctl.fix_tree_column_width)
         self.table_frame.tree.bind("<ButtonRelease-1>", self.ctl.fix_tree_column_width)
+
+        self.except_table_frame.introduction_frame.about_scroll_text.bind('<Double-Button-1>',self.ctl.show_introduction_toplevel)
 
         self.except_table_frame.main_function_frame.buttons_frame.start_button.bind('<Button-1>',
                                                                                     self.ctl.start_add_image)

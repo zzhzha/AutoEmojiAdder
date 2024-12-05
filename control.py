@@ -3,6 +3,8 @@ import win32con
 from ui import Win
 from tkinter import *
 from tkinter import filedialog
+from tkinter.scrolledtext import ScrolledText
+
 import os
 from PIL import Image
 import shutil
@@ -41,6 +43,54 @@ class Controller:
         self.pics_types_list = ['.bmp', '.jpg', '.jpeg', '.png', '.gif', '.webp']
 
         self.pics_path_list = []
+
+    def show_introduction_toplevel(self,event):
+        """
+        显示简介窗口
+        """
+        tl = Toplevel()
+        text = """
+微信自动添加表情包助手  
+b站账号：Z在此
+
+
+程序功能：将指定文件夹内的图片添加到你的微信的表情包库中。
+
+与很多其他添加微信表情包的程序一样，本程序也有一些限制和问题：
+    1.程序运行过程中你不能在电脑中进行其他任何操作，因为程序使用了操控键盘输入和鼠标光标的库。
+
+    2.程序虽然可以自动将大图片转化为小图片，但是图片质量越大转换时间越长，因此尽量不要选择质量过大的图片或者自己先手动缩小再添加到选择的文件夹内。
+
+    3.由于本人技术限制，程序存在bug，bug发生时无法继续添加表情包，而程序仍会持续运行。此时要么只能等待程序自行结束，或者乘添加表情包光标停止的时间的间隙自己手动关了程序窗口（。bug并不会导致额外的什么问题（因为定位都在微信上）。
+
+
+
+程序使用说明：
+    将文件传输助手窗口独立出来，！！尽可能拉长拉大！！，运行时程序会自动将文件传输助手窗口置顶。此时再打开程序配置好选项后就可以开始了。
+
+
+
+配置说明:
+
+表格：
+    选择的所有的图片文件夹的名称和路径，还有图片名称都显示在里面。双击项展开文件夹项，显示该文件夹下的图片名称，双击图片项以本地默认图片浏览打开预览（动图的浏览是截取的第一帧的静态图）。可以按ctrl+左键多选按delete删除对应不需要的项。
+
+
+图片配置说明：
+    图片边长：设置微信表情包的最大边长（1~1024），图片的最长边超过设定的长度将被自动缩小至等于所设定的长度。
+
+
+放大边长小于设定值的图片：
+    如果选中此选项，程序会将最长边小于设定值的图片放大到设定值；如果不选中，则图片保持原大小添加到表情包库中。
+
+
+        """
+        sText1 = ScrolledText(tl,relief='solid')
+        sText1.config(state=NORMAL)
+        sText1.insert(END, text)
+        sText1.config(state=DISABLED)
+        sText1.pack(fill=BOTH, expand=True)
+
 
     def fix_tree_column_width(self,event):
         tree_width = self.ui.table_frame.tree.winfo_width()

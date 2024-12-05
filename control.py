@@ -190,7 +190,7 @@ class Controller:
     def start_add_image(self, evt):
 
         self.ui.except_table_frame.main_function_frame.buttons_frame.start_button.config(state=DISABLED)
-        self.ui.except_table_frame.main_function_frame.buttons_frame.select_image_folder_button.config(state=DISABLED)
+        self.ui.except_table_frame.main_function_frame.buttons_frame.select_emoji_folder_button.config(state=DISABLED)
         self.ui.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.config(state=DISABLED)
         self.ui.except_table_frame.main_function_frame.image_config_frame.inquire_enlarge_pic_config_checkbutton.config(state=DISABLED)
         self.ui.table_frame.tree.config(selectmode="none")
@@ -247,7 +247,7 @@ class Controller:
             time.sleep(1)
 
         self.ui.except_table_frame.main_function_frame.buttons_frame.start_button.config(state=NORMAL)
-        self.ui.except_table_frame.main_function_frame.buttons_frame.select_image_folder_button.config(state=NORMAL)
+        self.ui.except_table_frame.main_function_frame.buttons_frame.select_emoji_folder_button.config(state=NORMAL)
         self.ui.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.config(state=NORMAL)
         self.ui.except_table_frame.main_function_frame.image_config_frame.inquire_enlarge_pic_config_checkbutton.config(state=NORMAL)
         self.ui.table_frame.tree.config(selectmode='extended')

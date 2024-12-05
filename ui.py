@@ -10,12 +10,18 @@ class TableFrame(Frame):
         self.xscroll, self.yscroll = self.create_scrollbars(self.tree)
 
     def create_table(self):
-        tree = Treeview(self, columns="path")
-        tree.column("#0", anchor=CENTER)
-        tree.column("path", anchor=CENTER)
-        tree.heading('#0', text='name')
-        tree.heading('path', text='path')
-        return tree
+        columns = {"name": 79, "path": 319}
+        tk_table = Treeview(self, show="headings", columns=list(columns), )
+        for text, width in columns.items():  # 批量设置列属性
+            tk_table.heading(text, text=text, anchor='center')
+            tk_table.column(text, anchor='center', width=width, stretch=False)  # stretch 不自动拉伸
+
+        # tree = Treeview(self, columns="path")
+        # tree.column("#0", anchor=CENTER)
+        # tree.column("path", anchor=CENTER)
+        # tree.heading('#0', text='name')
+        # tree.heading('path', text='path')
+        return tk_table
 
     def create_scrollbars(self, tree):
         xscroll = Scrollbar(self, orient=HORIZONTAL)
@@ -197,7 +203,7 @@ class WinGUI(Tk):
     def __win(self):
         self.title("Tkinter")
         self.geometry("700x600")
-        self.minsize(850, 600)
+        self.minsize(850, 900)
         # self.resizable(width=False, height=False)
 
     def __table_frame(self):
@@ -225,6 +231,7 @@ class Win(WinGUI):
 
         self.table_frame.tree.bind('<Double-Button-1>', self.ctl.show_image)
         self.table_frame.tree.bind('<Delete>', self.ctl.multi_delete_image)
+
         self.except_table_frame.main_function_frame.buttons_frame.start_button.bind('<Button-1>', self.ctl.start_add_image)
         self.except_table_frame.main_function_frame.buttons_frame.select_emoji_folder_button.bind('<Button-1>', self.ctl.select_image_folder)
         self.except_table_frame.main_function_frame.image_config_frame.max_image_length_config_scale.bind('<B1-Motion>', self.ctl.set_max_length)
